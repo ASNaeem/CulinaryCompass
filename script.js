@@ -1,19 +1,34 @@
 let recipesData = '';
-document.getElementById('search-button').addEventListener('click', () => {
-    console.log('Search button clicked'); // Debugging line
-    const query = document.getElementById('search-input').value;
-    fetchRecipes(query);
-});
 
-function fetchRecipes(query){
-	const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=' + query;
-	fetch(url).then(response => response.json()).then(data => {
-		console.log('Fetched data:', data);
-		recipesData = data.meals;
-		displayRecipes();
-	}).catch(error => console.error('Error fetching recipes:', error));
+function initiateSearch() {
+    const query = document.getElementById('search-input').value.trim();
+    fetchRecipes(query);
 }
 
+document.getElementById('search-button').addEventListener('click', () => {
+    console.log('Search button clicked'); // Debugging line
+    initiateSearch();
+});
+
+document.getElementById('search-input').addEventListener('keypress', (event) => {
+    // Check if the Enter key is pressed
+    if (event.key === 'Enter') {
+        initiateSearch();
+    }
+});
+
+// Function to fetch recipes based on the search query
+function fetchRecipes(query){
+    const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=' + query;
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Fetched data:', data);
+            recipesData = data.meals;
+            displayRecipes();
+        })
+        .catch(error => console.error('Error fetching recipes:', error));
+}
 function displayRecipes(){
 	const container = document.getElementById('recipes-container');
 
