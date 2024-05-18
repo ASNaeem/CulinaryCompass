@@ -80,6 +80,10 @@ function showModal(recipe) {
     const area = document.getElementById('modal-area');
     const instructions = document.getElementById('modal-instructions');
     const ingredientsList = document.getElementById('modal-ingredients');
+    //const source = document.getElementById('modal-source');
+    const link = document.getElementById('modal-link');
+    const video = document.getElementById('modal-video');
+    const label = document.getElementById('modal-label');
 
     title.innerHTML = `<strong>${recipe.strMeal}</strong>`;
     category.innerHTML = `<strong>Category:</strong> ${recipe.strCategory}`;
@@ -96,6 +100,14 @@ function showModal(recipe) {
     }
     ingredients = ingredients.slice(0, -2); // Remove the last comma and space
     ingredientsList.innerHTML = `<strong>Ingredients:</strong> ${ingredients}`;
+    label.innerHTML = `<strong>Source: </strong>`
+    link.href = recipe.strSource;
+    link.textContent = recipe.strSource;
+
+    video.innerHTML = `<iframe width="560" height="315" src="${recipe.strYoutube}" frameborder="0" allowfullscreen></iframe>`;
+    const videoId = recipe.strYoutube.split('v=')[1];
+    video.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+
 
     modal.style.display = 'block';
 }
